@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+<project name="Android" default="Android.0_war" basedir=".">
+
+	<!-- Enable access to environment variables -->
+	<!--<property environment="env"/>-->
+	
+	<property file="./local.properties" />
+
+
+	<!-- set global properties for this build -->
+	<!-- <property name="path" location="${tomcat.path}" />   -->
+	<property name="path" value="E:\tools\apache-tomcat-8.5.32" />  
+	<property name="lib" location="${path}/lib" /> 
+	<property name="src" location = "./src"  /> 
+	<property name="classes" value = "./web/WEB-INF/classes"  /> 
+	<property name="api" value="./api"/>
+	<property name="context" value="Android"/>
+	<property name="context.lib" location="./web/WEB-INF/lib" />
+	<!--<property name="server.dir" location="${path}"/>-->
+	<property name="servlet.jar" location="${path}/common/lib"/>
+	<property name="jsp.jar" location="${path}/common/lib"/>
+	
+
+	<!-- Set the classpath to compile by taking all the jar files from application and Tomcat -->
+	<path id="lib.class.path">
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/> 
+		</fileset>
+		<fileset dir="${context.lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${servlet.jar}"/>
+		<pathelement location="${jsp.jar}"/>
+	</path>
+
+	
+	<!-- Compile java files from the src folder -->
+	<target name="compile" description="Compile Java sources">
+		<!--<mkdir dir="${classes}"/>-->
+		
+		<javac srcdir="${src}"
+						classpath="${lib.class.path}"
+						destdir="${classes}"
+						fork="true"
+						compiler="javac1.5"
+						source="1.5"
+						target="1.5"
+						debug="on"
+						memoryInitialSize="512m"
+						memoryMaximumSize="1024m">
+						<classpath refid="lib.class.path"/>
+		</javac>
+	<!-- 	<copy todir="${classes}" file="./src/ApplicationResources_ct.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_eao.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_eao_xoma.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_ecrm.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_emr.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_en.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_ep.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_ep_en.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_ep_zh.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_es.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_gp.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_gp_en.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_gp_zh.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResources_zh.properties" />
+		<copy todir="${classes}" file="./src/ApplicationResourcesCtError.properties" />
+		<copy todir="${classes}" file="./src/c3p0.properties" />
+		 -->
+		
+		<!--<copy todir="${classes}" file="./src/hibernate.cfg.xml" />-->
+		<!--<copy todir="${classes}" file="./src/log4j.properties" />
+		<copy todir="${classes}" file="./src/soap_server.properties" />
+		<copy todir="${classes}" file="./src/spellcheckBundle.properties" />
+		<copy todir="${classes}" file="./src/spellcheck-english.0" />
+		
+		<copy todir="${classes}" file="./src/hibernate-common.cfg.xml" />
+		<copy todir="${classes}" file="./src/hibernate-ct.cfg.xml" />
+		<copy todir="${classes}" file="./src/hibernate-eao.cfg.xml" />
+		<copy todir="${classes}" file="./src/hibernate-ecrm.cfg.xml" />
+		<copy todir="${classes}" file="./src/hibernate-emr.cfg.xml" />
+		<copy todir="${classes}" file="./src/hibernate-gms.cfg.xml" />
+		-->
+		
+		
+		<copy todir="${classes}">
+			<fileset dir="./rules">	
+				<include name="**/*.drl"/>
+			</fileset>
+		</copy>	
+		
+		
+		<!--<copy todir="${classes}">
+				<fileset dir="${basedir}/src/com">
+						<exclude name="**/*.java"/>
+						<include name="**/*.properties*"/>
+						<include name="**/*.xml"/>
+						<include name="**/*.drl"/>
+						<include name="**/*.html"/>
+						<include name="**/*.cdr"/>
+				</fileset>
+		</copy>	
+		
+		<copy todir="${classes}">
+				<fileset dir="${basedir}/src/common">
+						<exclude name="**/*.java"/>
+						<include name="**/*.properties*"/>
+						<include name="**/*.xml"/>
+						<include name="**/*.drl"/>
+						<include name="**/*.html"/>
+						<include name="**/*.cdr"/>
+				</fileset>
+		</copy>	
+		
+		<copy todir="${classes}">
+				<fileset dir="${basedir}/src/dao">
+						<exclude name="**/*.java"/>
+						<include name="**/*.properties*"/>
+						<include name="**/*.xml"/>
+						<include name="**/*.drl"/>
+						<include name="**/*.html"/>
+						<include name="**/*.cdr"/>
+				</fileset>
+		</copy>	
+		
+		<copy todir="${classes}">
+				<fileset dir="${basedir}/src/service">
+						<exclude name="**/*.java"/>
+						<include name="**/*.properties*"/>
+						<include name="**/*.xml"/>
+						<include name="**/*.drl"/>
+						<include name="**/*.html"/>
+						<include name="**/*.cdr"/>
+				</fileset>
+		</copy>	
+		
+		<copy todir="${classes}">
+				<fileset dir="${basedir}/src/web">
+						<exclude name="**/*.java"/>
+						<include name="**/*.properties*"/>
+						<include name="**/*.xml"/>
+						<include name="**/*.drl"/>
+						<include name="**/*.html"/>
+						<include name="**/*.cdr"/>
+				</fileset>
+		</copy>	-->
+				
+			
+	</target>
+
+	
+
+	<target name="clean" >
+		<delete dir="${classes}"/>
+		<!--<delete dir="${basedir}/webapps"/>-->
+	</target>
+
+
+	<target name="create" depends="clean">
+		<mkdir dir="${classes}"/>
+	</target>
+
+	
+<!--	<target name="MeetingAgenda">  
+		<delete file="D:/Android_SVN/Android_16_LATEST/web/WEB-INF/classes/com/ksi/ep/service/pms/impl/MeetingAgendaManagerImpl.class"/>	
+			<copy file="E:/share/eclipse_compile/MeetingAgendaManagerImpl.class" tofile="D:/Android_SVN/Android_16_LATEST/web/WEB-INF/classes/com/ksi/ep/service/pms/impl/MeetingAgendaManagerImpl.class"/>	
+			<echo>MeetingAgendaManagerImpl is replaced </echo>
+	</target>-->
+
+	<!-- Create war file -->
+	<target name="war" >  
+		<war basedir="./web" destfile="E:\Newfolder\pro1\output\andriod.war" update="true" webxml="./web/WEB-INF/web.xml" >
+	    </war>
+	</target>
+
+
+	<target name="Android" depends="compile"/>
+	<target name="Android.0_compile" depends="clean,compile"/>
+	<target name="Android.0_war" depends="create,compile,war"/>
+
+</project>
